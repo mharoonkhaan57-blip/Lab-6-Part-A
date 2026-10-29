@@ -1,0 +1,99 @@
+/* Name: M.Haroon-Ur-Rasheed Khan | Reg. No: Ai-9 | Subject: DSA | Sec: A */
+// Lab 06 Part A: Menu-driven circular linked list
+
+#include "Lab_06_Part_A_Circular_List.h"
+
+int main()
+{
+    CircularLinkedList library;
+    int choice;
+
+    do
+    {
+        cout << "\n===== Circular Library Book Display =====\n";
+        cout << "1. Display All Books\n";
+        cout << "2. Insert Book at Head\n";
+        cout << "3. Remove Book from Head\n";
+        cout << "4. Insert Book at Index\n";
+        cout << "5. Remove Book at Index\n";
+        cout << "6. Swap Books\n";
+        cout << "7. Sort Books by ID\n";
+        cout << "8. Reverse Collection\n";
+        cout << "9. Move to Next Book\n";
+        cout << "10. Check Status\n";
+        cout << "11. Exit\nChoice: ";
+        cin >> choice;
+
+        if (choice == 1)
+            library.Print();
+        else if (choice == 2)
+        {
+            int id;
+            string title;
+            cout << "Book ID: ";
+            cin >> id;
+            cin.ignore();
+            cout << "Book Title: ";
+            getline(cin, title);
+            library.Insert(new BookNode(id, title));
+        }
+        else if (choice == 3)
+        {
+            BookNode* removed = library.Remove();
+            if (removed != nullptr)
+            {
+                cout << "Removed: " << removed->title << '\n';
+                delete removed;
+            }
+            else
+                cout << "Collection is empty.\n";
+        }
+        else if (choice == 4)
+        {
+            int id, index;
+            string title;
+            cout << "Book ID and index: ";
+            cin >> id >> index;
+            cin.ignore();
+            cout << "Book Title: ";
+            getline(cin, title);
+            library.InsertAt(new BookNode(id, title), index);
+        }
+        else if (choice == 5)
+        {
+            int index;
+            cout << "Index: ";
+            cin >> index;
+            BookNode* removed = library.RemoveAt(index);
+            if (removed != nullptr)
+            {
+                cout << "Removed: " << removed->title << '\n';
+                delete removed;
+            }
+        }
+        else if (choice == 6)
+        {
+            int first, second;
+            cout << "Two indexes: ";
+            cin >> first >> second;
+            library.Swap(first, second);
+        }
+        else if (choice == 7)
+            library.Sort();
+        else if (choice == 8)
+            library.Reverse();
+        else if (choice == 9)
+        {
+            library.MoveNext();
+            library.PrintCurrent();
+        }
+        else if (choice == 10)
+            cout << (library.IsEmpty() ? "Collection is empty.\n"
+                                       : "Collection is not empty.\n");
+        else if (choice != 11)
+            cout << "Invalid choice.\n";
+
+    } while (choice != 11);
+
+    return 0;
+}
